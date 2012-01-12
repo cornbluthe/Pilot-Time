@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="regions">
+        <item>US</item>
+        <item>US</item>
+        <item>US</item>
+        <item>US</item>
+        <item>US-Indiana</item>
+        <item>US</item>
+        <item>US</item>
+        <item>US</item>
+        <item>US</item>
+        <item>US</item>
+        <item>US</item>
+        <item>US</item>
+        <item>US</item>
+    </string-array>
+
+    <string-array name="zones">
+        <item>Alaska</item>
+        <item>Aleutian</item>
+        <item>Arizona</item>
+        <item>Central</item>
+        <item>East-Indiana</item>
+        <item>Eastern</item>
+        <item>Hawaii</item>
+        <item>Indiana-Starke</item>
+        <item>Michigan</item>
+        <item>Mountain</item>
+        <item>Pacific</item>
+        <item>Pacific-New</item>
+        <item>Samoa</item>
+    </string-array>
+
+    <string-array name="offsets">
+        <item>-9</item>
+        <item>-10</item>
+        <item>-7</item>
+        <item>-6</item>
+        <item>-5</item>
+        <item>-5</item>
+        <item>-10</item>
+        <item>-6</item>
+        <item>-5</item>
+        <item>-7</item>
+        <item>-8</item>
+        <item>-8</item>
+        <item>-11</item>
+    </string-array>
+
+    <string-array name="tla">
+        <item>AKST</item>
+        <item>HST</item>
+        <item>MST</item>
+        <item>CST</item>
+        <item>EST</item>
+        <item>EST</item>
+        <item>HST</item>
+        <item>CST</item>
+        <item>EST</item>
+        <item>MST</item>
+        <item>PST</item>
+        <item>PST</item>
+        <item></item>
+    </string-array>
+
+</resources>
