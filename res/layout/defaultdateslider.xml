@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.willowtree.pilottime.dateslider.labeler.SliderContainer
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.willowtree.pilottime"
+    android:id="@+id/dateSliderContainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <com.willowtree.pilottime.dateslider.ScrollLayout
+        style="@style/Scroller"
+        app:labelerClass="com.willowtree.pilottime.dateslider.labeler.MonthYearLabeler"
+        app:labelerFormat="%tb %tY"
+        app:childWidth="90dp"
+        />
+    <com.willowtree.pilottime.dateslider.ScrollLayout
+        style="@style/Scroller"
+        app:labelerClass="com.willowtree.pilottime.dateslider.labeler.DayDateLabeler"
+        app:labelerFormat="%td %ta"
+        app:childWidth="45dp"
+        />
+    <include layout="@layout/dialogbuttons"/>
+</com.willowtree.pilottime.dateslider.labeler.SliderContainer>
