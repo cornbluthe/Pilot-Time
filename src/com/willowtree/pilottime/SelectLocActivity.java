@@ -49,7 +49,7 @@ public class SelectLocActivity extends Activity {
 		mListView.setAdapter(m_adapter);
 		mListView.setOnItemClickListener(mListener);
 
-		// declare button
+		//button to go back to main
 		backHomeButton = (ImageView) findViewById(R.id.back_button);
 		backHomeButton.setOnClickListener(backButtonListener);
 
@@ -64,6 +64,7 @@ public class SelectLocActivity extends Activity {
 			// TODO Auto-generated method stub
 			application.setTimeZone(m_zones.get(position));
 			finish();
+            overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
 		}
 	};
 
@@ -73,9 +74,9 @@ public class SelectLocActivity extends Activity {
 			Intent mainIntent = new Intent(v.getContext(),
 					PilotTimeActivity.class);
 			startActivity(mainIntent);
-			// TODO get selection and set as result
 			// setResult(SELECTION,mainIntent);
 			finish();
+            overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
 		}
 	};
 

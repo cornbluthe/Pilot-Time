@@ -3,4 +3,37 @@
 
     <string name="hello">Hello World, PilotTimeActivity!</string>
     <string name="app_name">Pilot Time</string>
+    <string name="shareButton">Click here to share with friends.</string>
+    <string name="infoText">&lt;html&gt;
+        &lt;body&gt;
+        &lt;p&gt;Pilot Time was designed by pilots to make a few common aviation tasks fast and easy.&lt;/p&gt;
+        &lt;p&gt;
+        The Time Page instantly gives you the current time in 12 hour, 24 hour and UTC formats for your chosen time zone.
+        &lt;/p&gt;
+        &lt;p&gt;
+        The Converter Page allows you to quickly convert any past, current or future time to/from UTC or any other time zone.
+        &lt;/p&gt;
+        &lt;p&gt;
+        Tips on using the Time Page:
+        &lt;p&gt;
+        &lt;ul&gt;
+        &lt;li&gt;Tap on the time zone to change it.&lt;/li&gt;
+        &lt;li&gt;Tap on &quot;Converter&quot; at bottom right to go to Converter screen.&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+        Tips on using the Converter Page:
+        &lt;/p&gt;
+        &lt;ul&gt;
+        &lt;li&gt;Tap on the time zone under &quot;Base&quot; or &quot;Result&quot; to change the time zone.  There is a &quot;UTC&quot; button at the top right of this page - tap it to select UTC time quickly.&lt;/li&gt;
+        &lt;li&gt;Tap the date/time area under the &quot;Base&quot; column to select a past, current, or future date/time to convert from.&lt;/li&gt;
+        &lt;li&gt;Tap the yellow &quot;Switch&quot; button to toggle the Base and Result columns.&lt;/li&gt;
+        &lt;li&gt;Tap on &quot;Time&quot; at bottom left to go to Time screen.&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+        If you have any comments about this app, please send us an email at &lt;a href=&quot;mailto:iphone@willowtreeapps.com&quot;&gt;iphone@willowtreeapps.com&lt;/a&gt;.
+        &lt;/p&gt;
+        &lt;/body&gt;
+
+
+        &lt;/html&gt;</string>
 </resources>
