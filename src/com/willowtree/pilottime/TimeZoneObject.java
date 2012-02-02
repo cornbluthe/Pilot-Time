@@ -28,6 +28,15 @@ public class TimeZoneObject {
 	public String getRegionName() {
 		return regionName;
 	}
+    
+        public String getFormattedRegionandZone(){
+            if (regionName=="UTC"){
+                return "UTC";
+            }
+            else{
+                return regionName + "|" + zoneName;
+            }
+        }
 
 	public String getTimeOffset() {
 		return timeOffset;

@@ -24,6 +24,7 @@ import java.util.Date;
 public class PilotTimeActivity extends Activity {
     private Context mContext;
     private Button locationSelectBut;
+    private ImageView switchBut;
     private ImageView infoBut;
     private ImageView converterFooterBut;
     private ImageView timeFooterBut;
@@ -46,11 +47,11 @@ public class PilotTimeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
+
         mContext = this;
-        
+
         currentBaseTime = System.currentTimeMillis(); //default to current time
-        
+
         onTime = true; //'time' screen is default, false is 'converter' screen
 
         application = ((PilotTimeApplication) getApplication());
@@ -62,11 +63,11 @@ public class PilotTimeActivity extends Activity {
         //button that brings up info page
         infoBut = (ImageView) findViewById(R.id.infoButton);
         infoBut.setOnClickListener(infoButListener);
-        
+
         //button that brings up the converter
         converterFooterBut = (ImageView) findViewById(R.id.converter_footer_light);
         converterFooterBut.setOnClickListener(converterFooterButtonListener);
-        
+
         //button for base time selector on converter
         baseTimeBut = (LinearLayout) findViewById(R.id.button_convert_left);
         baseTimeBut.setOnClickListener(baseTimeButListener);
@@ -74,20 +75,30 @@ public class PilotTimeActivity extends Activity {
         //button for result time selector on converter
         resultTimeBut = (LinearLayout) findViewById(R.id.button_convert_right);
         resultTimeBut.setOnClickListener(resultTimeButListener);
-        
+
         //button for dateslider
         baseTimeButDateSlider = (LinearLayout) findViewById(R.id.button_basetime_convert);
         baseTimeButDateSlider.setOnClickListener(baseTimeButDateSliderListener);
-        
+
         timeFooterBut = (ImageView) findViewById(R.id.time_footer_light);
         timeFooterBut.setOnClickListener(timeFooterButtonListener);
-        
+
         timeScreenLayout = (LinearLayout) findViewById(R.id.bodyTime);
         converterScreenLayout = (LinearLayout) findViewById(R.id.bodyConverter);
-        
-       
+
+        switchBut = (ImageView) findViewById(R.id.button_switch);
+        switchBut.setOnClickListener(switchButListener);
 
     }
+
+    private OnClickListener switchButListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            application.setTimeZone(currentZoneBase, PilotTimeRefs.RESULT_TYPE);
+            application.setTimeZone(currentZoneResult, PilotTimeRefs.BASE_TYPE);
+            onResume();
+        }
+    };
 
     private OnClickListener baseTimeButDateSliderListener = new OnClickListener() {
         @Override
@@ -97,13 +108,12 @@ public class PilotTimeActivity extends Activity {
                 public void onDateSet(DateSlider view, Calendar selectedDate) {
                     currentBaseTime = selectedDate.getTimeInMillis();
                     onResume();
-                    //To change body of implemented methods use File | Settings | File Templates.
                 }
             }, Calendar.getInstance(), 1);
             dtms.show();
         }
     };
-    
+
     private OnClickListener infoButListener = new OnClickListener() {
         public void onClick(View view) {
             Intent infoIntent = new Intent(view.getContext(), InfoActivity.class);
@@ -114,18 +124,18 @@ public class PilotTimeActivity extends Activity {
     private OnClickListener converterFooterButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-             if(onTime){
-                 //switch body views
-                 timeScreenLayout.setVisibility(view.GONE);
-                 converterScreenLayout.setVisibility(view.VISIBLE);
-                 //switch which light is 'on'
-                 converterFooterBut.setImageDrawable(getResources().getDrawable(R.drawable.footer_light_focus));
-                 timeFooterBut.setImageDrawable(getResources().getDrawable(R.drawable.footer_light));
-             }
+            if(onTime){
+                //switch body views
+                timeScreenLayout.setVisibility(view.GONE);
+                converterScreenLayout.setVisibility(view.VISIBLE);
+                //switch which light is 'on'
+                converterFooterBut.setImageDrawable(getResources().getDrawable(R.drawable.footer_light_focus));
+                timeFooterBut.setImageDrawable(getResources().getDrawable(R.drawable.footer_light));
+            }
             onTime = false; //we are not on the 'time' screen anymore
         }
     };
-    
+
     private OnClickListener timeFooterButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -173,7 +183,7 @@ public class PilotTimeActivity extends Activity {
             overridePendingTransition(R.anim.itemmoveup, R.anim.itemmoveup2);
         }
     };
-    
+
     private Handler mHandler = new Handler();
 
     private Runnable mUpdateTime = new Runnable(){
@@ -233,7 +243,7 @@ public class PilotTimeActivity extends Activity {
         final TextView baseTimeConvertBottomText = (TextView) findViewById(R.id.button_convert_left_bottom_text);
         final TextView resultTimeConvertTopText = (TextView) findViewById(R.id.button_convert_right_top_text);
         final TextView resultTimeConvertBottomText = (TextView) findViewById(R.id.button_convert_right_bottom_text);
-        
+
         baseTimeConvertTopText.setText(currentZoneBase.getZoneName());
         baseTimeConvertBottomText.setText(currentZoneBase.getZoneDesc());
         resultTimeConvertTopText.setText(currentZoneResult.getZoneName());
@@ -261,12 +271,10 @@ public class PilotTimeActivity extends Activity {
         resultTimeTopText.setText(timeFormat.format(currentResultTime));
         resultTimeBottomText.setText(timeFormat2.format(currentResultTime));
     }
-    
-    private Date getResultTime(long bTime){
-        //TODO: fix this shit.
-        final Date theTime = new Date(bTime-currentZoneBase.getDateOffset()+currentZoneResult.getDateOffset());
-               return  theTime;
 
+    private Date getResultTime(long bTime){
+        final Date theTime = new Date(bTime-currentZoneBase.getDateOffset()+currentZoneResult.getDateOffset());
+        return  theTime;
     }
 
     @Override
@@ -288,10 +296,10 @@ public class PilotTimeActivity extends Activity {
         updateConverterDisplay();
         updateConverterBaseTime();
         updateConverterResultTime();
-        //TODO: set currentZone to zone selected
+
         mHandler.removeCallbacks(mUpdateTime);
         mHandler.postDelayed(mUpdateTime, 1000);
-        locationSelectBut.setText(currentZone.getRegionName() + " | " + currentZone.getZoneName());
+        locationSelectBut.setText(currentZone.getFormattedRegionandZone());
     }
 
     @Override

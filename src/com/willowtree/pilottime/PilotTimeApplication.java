@@ -7,7 +7,6 @@ import java.util.Date;
 public class PilotTimeApplication extends Application {
 	private SharedPreferences mSharedPrefs;
 	private SharedPreferences.Editor mPrefsEditor;
-        private Date baseTime;
 
 	@Override
 	public void onCreate() {
@@ -31,13 +30,4 @@ public class PilotTimeApplication extends Application {
 		TimeZoneObject o = new TimeZoneObject(zone, offset, tla, region);
 		return o;
 	}
-    
-        public Date getBaseTime(){
-            baseTime=new Date(System.currentTimeMillis());
-                return baseTime;
-        }
-
-        public void setBaseTime(Date d){
-               //get Date from android-dateslider
-        }
 }

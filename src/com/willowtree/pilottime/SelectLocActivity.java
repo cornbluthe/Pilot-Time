@@ -1,6 +1,7 @@
 package com.willowtree.pilottime;
 
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -17,11 +18,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SelectLocActivity extends Activity {
     private String mType;
     private ImageView backHomeButton;
+    private RelativeLayout utcButton;
+    private RelativeLayout localButton;
     private ArrayList<TimeZoneObject> m_zones = null;
     private ZoneAdapter m_adapter;
     private Runnable viewZones;
@@ -33,7 +37,11 @@ public class SelectLocActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selectloc);
 
-
+        utcButton = (RelativeLayout) findViewById(R.id.jumpto_utc_button);
+        localButton = (RelativeLayout) findViewById(R.id.jumpto_local_button);
+        utcButton.setOnClickListener(utcButtonListener);
+        localButton.setOnClickListener(localButtonListener);
+        
         if (getIntent().getExtras() != null) {
             Bundle extras = getIntent().getExtras();
             mType = extras.getString("type");
@@ -62,6 +70,25 @@ public class SelectLocActivity extends Activity {
         Thread thread = new Thread(null, viewZones, "populateZones");
         thread.start();
     }
+    
+    OnClickListener utcButtonListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            application.setTimeZone(new TimeZoneObject("", "", "", "UTC"), mType);
+            finish();
+            overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
+        }
+    };
+
+    OnClickListener localButtonListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          //  TimeZone t = new TimeZone
+           // application.setTimeZone(new TimeZoneObject("US", "", "", "UTC"), mType);
+           // finish();
+           // overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
+        }
+    };
 
     OnItemClickListener mListener = new OnItemClickListener() {
         @Override

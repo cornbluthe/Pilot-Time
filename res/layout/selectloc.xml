@@ -25,17 +25,32 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true" >
 
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/jumpto_utc_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/button_jumpto_utc" />
+                android:background="@drawable/button_jumpto_utc"
+                >
+                <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="UTC"
+                      android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
 
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/jumpto_local_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/button_jumpto_local" />
+                android:background="@drawable/button_jumpto_local" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Local"
+                android:layout_centerInParent="true"
+                />
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
 
