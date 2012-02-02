@@ -68,18 +68,22 @@ public class SelectLocActivity extends Activity {
     OnClickListener utcButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            //application.setTimeZone(new TimeZoneObject("", "", "", "UTC"), mType);
-            //finish();
-            //overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            application.setTimeZone(new TimeZoneObject("UTC", getRegionDisplayName(tz),
+                    getFullDisplayName(tz), getZoneOffsetDisplay(tz)), mType);
+            finish();
+            overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
     };
 
     OnClickListener localButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            //application.setTimeZone(new TimeZoneObject("", "", "", "UTC"), mType);
-            //finish();
-            //overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
+            TimeZone tz = TimeZone.getDefault();
+            application.setTimeZone(new TimeZoneObject(TimeZone.getDefault().getID(), getRegionDisplayName(tz),
+                    getFullDisplayName(tz), getZoneOffsetDisplay(tz)), mType);
+            finish();
+            overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
     };
 

@@ -253,10 +253,16 @@ public class PilotTimeActivity extends Activity {
         final TextView resultTimeConvertBottomText = (TextView) findViewById(R.id.button_convert_right_bottom_text);
 
         baseTimeConvertTopText.setText(currentZoneBase.regionDisplayName);
-        //if(currentZoneBase.getZoneId!="UTC")
-        baseTimeConvertBottomText.setText(currentZoneBase.zoneOffsetDisplay);
+        if(currentZoneBase.zoneID=="UTC")
+            baseTimeConvertBottomText.setText("");
+        else
+            baseTimeConvertBottomText.setText(currentZoneBase.zoneOffsetDisplay);
         resultTimeConvertTopText.setText(currentZoneResult.regionDisplayName);
-        resultTimeConvertBottomText.setText(currentZoneResult.zoneOffsetDisplay);
+
+        if(currentZoneResult.zoneID=="UTC")
+            resultTimeConvertBottomText.setText("");
+        else
+            resultTimeConvertBottomText.setText(currentZoneResult.zoneOffsetDisplay);
 
     }
 
