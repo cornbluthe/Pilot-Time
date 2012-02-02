@@ -286,7 +286,7 @@
                     android:id="@+id/button_convert_left_top_text"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="TestText"/>
+                    android:textColor="#33FF00"/>
                 <TextView
                     android:id="@+id/button_convert_left_bottom_text"
                     android:layout_height="wrap_content"
@@ -314,7 +314,7 @@
                     android:id="@+id/button_convert_right_top_text"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="TestText"/>
+                    android:textColor="#33FF00"/>
                 <TextView
                     android:id="@+id/button_convert_right_bottom_text"
                     android:layout_height="wrap_content"

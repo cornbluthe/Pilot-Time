@@ -24,7 +24,7 @@ public class PilotTimeApplication extends Application {
 
     public TimeZoneObject getTimeZone(String type) {
         String zoneId = mSharedPrefs.getString(type + "id", "UTC");
-        String rdn = mSharedPrefs.getString(type + "region", "");
+        String rdn = mSharedPrefs.getString(type + "region", "UTC");
         String fdn = mSharedPrefs.getString(type + "fullname", "UTC");
         String zod = mSharedPrefs.getString(type + "zoneoffset", "0");
         TimeZoneObject o = new TimeZoneObject(zoneId,rdn,fdn,zod);
