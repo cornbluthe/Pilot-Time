@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class PilotTimeActivity extends Activity {
     private Context mContext;
@@ -49,7 +50,7 @@ public class PilotTimeActivity extends Activity {
         setContentView(R.layout.main);
 
         mContext = this;
-
+        
         currentBaseTime = System.currentTimeMillis(); //default to current time
 
         onTime = true; //'time' screen is default, false is 'converter' screen
@@ -214,28 +215,35 @@ public class PilotTimeActivity extends Activity {
         final TextView dayText3 = (TextView) findViewById(R.id.day_text3);
 
         //compute utc time and time for current timezone
-        final Date easternTime = new Date(System.currentTimeMillis());
-        final Date utcTime = new Date(easternTime.getTime() + UTCOFFSET);
-        final Date currentTime = new Date(utcTime.getTime() + currentZone.getDateOffset());
+        Date now = new Date();
 
         //format times to be displayed
         final SimpleDateFormat formatterTime1 = new SimpleDateFormat( "hh:mm:ss a" );
+        formatterTime1.setTimeZone(TimeZone.getTimeZone(currentZone.zoneID));
         final SimpleDateFormat formatterTime2 = new SimpleDateFormat( "kk:mm:ss" );
+        formatterTime2.setTimeZone(TimeZone.getTimeZone(currentZone.zoneID));
         final SimpleDateFormat formatterTime3 = new SimpleDateFormat( "kk:mm:ss" );
+        formatterTime3.setTimeZone(TimeZone.getTimeZone("UTC"));
         final SimpleDateFormat formatterTime4 = new SimpleDateFormat( "EEE, MMM");
+        formatterTime4.setTimeZone(TimeZone.getTimeZone(currentZone.zoneID));
         final SimpleDateFormat formatterTime5 = new SimpleDateFormat( "d");
+        formatterTime5.setTimeZone(TimeZone.getTimeZone(currentZone.zoneID));
+        final SimpleDateFormat formatterTime6 = new SimpleDateFormat( "EEE, MMM");
+        formatterTime6.setTimeZone(TimeZone.getTimeZone(currentZone.zoneID));
+        final SimpleDateFormat formatterTime7 = new SimpleDateFormat( "d");
+        formatterTime7.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-        topTimeText1.setText( "12-HR " + currentZone.getZoneDesc() );
-        topTimeText2.setText( "24-HR " + currentZone.getZoneDesc() );
-        bottomTimeText1.setText( formatterTime1.format(currentTime) );
-        bottomTimeText2.setText( formatterTime2.format(currentTime) );
-        bottomTimeText3.setText( formatterTime3.format(utcTime));
-        dayMonthText1.setText( formatterTime4.format(currentTime));
-        dayMonthText2.setText( formatterTime4.format(currentTime));
-        dayMonthText3.setText( formatterTime4.format(utcTime));
-        dayText1.setText(formatterTime5.format(currentTime));
-        dayText2.setText(formatterTime5.format(currentTime));
-        dayText3.setText(formatterTime5.format(utcTime));
+        topTimeText1.setText( "12-HR " + currentZone.zoneOffsetDisplay );
+        topTimeText2.setText( "24-HR " + currentZone.zoneOffsetDisplay );
+        bottomTimeText1.setText( formatterTime1.format(now) );
+        bottomTimeText2.setText( formatterTime2.format(now) );
+        bottomTimeText3.setText( formatterTime3.format(now));
+        dayMonthText1.setText( formatterTime4.format(now));
+        dayMonthText2.setText( formatterTime4.format(now));
+        dayMonthText3.setText( formatterTime4.format(now));
+        dayText1.setText(formatterTime5.format(now));
+        dayText2.setText(formatterTime5.format(now));
+        dayText3.setText(formatterTime5.format(now));
     }
 
     public void updateConverterDisplay(){
@@ -244,10 +252,11 @@ public class PilotTimeActivity extends Activity {
         final TextView resultTimeConvertTopText = (TextView) findViewById(R.id.button_convert_right_top_text);
         final TextView resultTimeConvertBottomText = (TextView) findViewById(R.id.button_convert_right_bottom_text);
 
-        baseTimeConvertTopText.setText(currentZoneBase.getZoneName());
-        baseTimeConvertBottomText.setText(currentZoneBase.getZoneDesc());
-        resultTimeConvertTopText.setText(currentZoneResult.getZoneName());
-        resultTimeConvertBottomText.setText(currentZoneResult.getZoneDesc());
+        baseTimeConvertTopText.setText(currentZoneBase.regionDisplayName);
+        //if(currentZoneBase.getZoneId!="UTC")
+        baseTimeConvertBottomText.setText(currentZoneBase.zoneOffsetDisplay);
+        resultTimeConvertTopText.setText(currentZoneResult.regionDisplayName);
+        resultTimeConvertBottomText.setText(currentZoneResult.zoneOffsetDisplay);
 
     }
 
@@ -299,7 +308,7 @@ public class PilotTimeActivity extends Activity {
 
         mHandler.removeCallbacks(mUpdateTime);
         mHandler.postDelayed(mUpdateTime, 1000);
-        locationSelectBut.setText(currentZone.getFormattedRegionandZone());
+        locationSelectBut.setText(currentZone.fullDisplayName);
     }
 
     @Override

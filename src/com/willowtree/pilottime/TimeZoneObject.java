@@ -1,65 +1,40 @@
 package com.willowtree.pilottime;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 public class TimeZoneObject {
-	private String regionName;
-	private String zoneName;
-	private String timeOffset;
-	private String tla;
-		
-	//computes the GMT offset in milliseconds
-	public long getDateOffset(){
-		int temp = 0;
-		if(timeOffset.contains("-")){
-			temp = Integer.parseInt(timeOffset.substring(1)) * -1;
-		}
-		else if(timeOffset.contains("+")){
-			temp = Integer.parseInt(timeOffset.substring(1));
-		}
-		long dateOffset = (long) (temp * 60 * 60 * 1000); 
-		return dateOffset;
-	}
-	
-	public String getZoneName() {
-		return zoneName;
-	}
-	
-	public String getRegionName() {
-		return regionName;
-	}
-    
-        public String getFormattedRegionandZone(){
-            if (regionName=="UTC"){
-                return "UTC";
-            }
-            else{
-                return regionName + "|" + zoneName;
-            }
-        }
+    public String zoneID;
+    public String regionDisplayName;
+    public String fullDisplayName;
+    public String zoneOffsetDisplay;
 
-	public String getTimeOffset() {
-		return timeOffset;
-	}
+    //computes the GMT offset in milliseconds
+    public long getDateOffset(){
+        return TimeZone.getTimeZone(zoneID).getRawOffset();
+    }
 
-	public String getTla() {
-		if (tla==null) return "";
-		return tla;
-	}
-	
-	public String getZoneDesc(){
-		if (tla!=null)
-			return (tla + " | UTC " + timeOffset);
-		else
-			return ("UTC " + timeOffset);
-	}
-	
-	public TimeZoneObject(String zoneName, String timeOffset, String tla, String regionName) {
-		super();
-		this.regionName = regionName;
-		this.zoneName = zoneName;
-		this.timeOffset = timeOffset;
-		this.tla = tla;
-	}
-	
+    public TimeZoneObject(String zID) {
+        //super();
+        zoneID = zID;
+    }
+
+    public TimeZoneObject(String zID, String rdn) {
+        //super();
+        zoneID = zID;
+        regionDisplayName = rdn;
+    }
+    public TimeZoneObject(String zID, String rdn, String fdn) {
+        //super();
+        zoneID = zID;
+        regionDisplayName = rdn;
+        fullDisplayName = fdn;
+    }
+    public TimeZoneObject(String zID, String rdn, String fdn, String zod) {
+        //super();
+        zoneID = zID;
+        regionDisplayName = rdn;
+        fullDisplayName = fdn;
+        zoneOffsetDisplay = zod;
+    }
 }

@@ -1,6 +1,7 @@
 package com.willowtree.pilottime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TimeZone;
 
 import android.app.Activity;
@@ -41,7 +42,7 @@ public class SelectLocActivity extends Activity {
         localButton = (RelativeLayout) findViewById(R.id.jumpto_local_button);
         utcButton.setOnClickListener(utcButtonListener);
         localButton.setOnClickListener(localButtonListener);
-        
+
         if (getIntent().getExtras() != null) {
             Bundle extras = getIntent().getExtras();
             mType = extras.getString("type");
@@ -50,14 +51,8 @@ public class SelectLocActivity extends Activity {
         application = ((PilotTimeApplication) getApplication());
 
         m_zones = new ArrayList<TimeZoneObject>();
-        this.m_adapter = new ZoneAdapter(this, R.layout.timeentry, m_zones);
 
-        viewZones = new Runnable() {
-            @Override
-            public void run() {
-                getZones();
-            }
-        };
+        this.m_adapter = new ZoneAdapter(this, R.layout.timeentry, m_zones);
 
         mListView = (ListView) findViewById(R.id.list);
         mListView.setAdapter(m_adapter);
@@ -67,26 +62,24 @@ public class SelectLocActivity extends Activity {
         backHomeButton = (ImageView) findViewById(R.id.back_button);
         backHomeButton.setOnClickListener(backButtonListener);
 
-        Thread thread = new Thread(null, viewZones, "populateZones");
-        thread.start();
+        getZones();
     }
-    
+
     OnClickListener utcButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            application.setTimeZone(new TimeZoneObject("", "", "", "UTC"), mType);
-            finish();
-            overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
+            //application.setTimeZone(new TimeZoneObject("", "", "", "UTC"), mType);
+            //finish();
+            //overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
     };
 
     OnClickListener localButtonListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-          //  TimeZone t = new TimeZone
-           // application.setTimeZone(new TimeZoneObject("US", "", "", "UTC"), mType);
-           // finish();
-           // overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
+            //application.setTimeZone(new TimeZoneObject("", "", "", "UTC"), mType);
+            //finish();
+            //overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
     };
 
@@ -94,7 +87,6 @@ public class SelectLocActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> a, View v, int position,
                 long id) {
-            // TODO Auto-generated method stub
             application.setTimeZone(m_zones.get(position), mType);
             finish();
             overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
@@ -103,48 +95,22 @@ public class SelectLocActivity extends Activity {
 
     private OnClickListener backButtonListener = new OnClickListener() {
         public void onClick(View v) {
-            // launch location select activity
             Intent mainIntent = new Intent(v.getContext(),
                     PilotTimeActivity.class);
             startActivity(mainIntent);
-            // setResult(SELECTION,mainIntent);
             finish();
             overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
     };
 
-    private Runnable returnRes = new Runnable() {
-
-        @Override
-        public void run() {
-            if (m_zones != null && m_zones.size() > 0) {
-                m_adapter.notifyDataSetChanged();
-                for (int i = 0; i < m_zones.size(); i++)
-                    m_adapter.add(m_zones.get(i));
-            }
-            m_adapter.notifyDataSetChanged();
-        }
-    };
-
     private void getZones() {
-        try {
-            m_zones = new ArrayList<TimeZoneObject>();
-            // TODO: create TimeZone arrayList based on arrays.xml
-            String[] regions = getResources().getStringArray(R.array.regions);
-            String[] zones = getResources().getStringArray(R.array.zones);
-            String[] offsets = getResources().getStringArray(R.array.offsets);
-            String[] tla = getResources().getStringArray(R.array.tla);
-            for (int i = 0; i < regions.length; i++) {
-                TimeZoneObject x = new TimeZoneObject(zones[i], offsets[i],
-                        tla[i], regions[i]);
-                m_zones.add(x);
+            String[] listItems = TimeZone.getAvailableIDs();
+            TimeZone tz = null;
+            for (int i = 0; i < listItems.length; i++) {
+                tz = TimeZone.getTimeZone(listItems[i]);
+                m_zones.add(new TimeZoneObject(listItems[i], getRegionDisplayName(tz),
+                        getFullDisplayName(tz), getZoneOffsetDisplay(tz)));
             }
-            // Thread.sleep(5000);
-            Log.i("ARRAY", "" + m_zones.size());
-        } catch (Exception e) {
-            Log.e("BACKGROUND_PROC", e.getMessage());
-        }
-        runOnUiThread(returnRes);
     }
 
     private class ZoneAdapter extends ArrayAdapter<TimeZoneObject> {
@@ -167,14 +133,51 @@ public class SelectLocActivity extends Activity {
             if (z != null) {
                 TextView zoneName = (TextView) v.findViewById(R.id.location);
                 TextView zoneTla = (TextView) v.findViewById(R.id.zone);
-                if (zoneName != null) {
-                    zoneName.setText(z.getZoneName());
-                }
-                if (zoneTla != null) {
-                    zoneTla.setText(z.getZoneDesc());
-                }
+
+                zoneName.setText(z.fullDisplayName);
+                zoneTla.setText(z.zoneOffsetDisplay);
             }
             return v;
         }
+    }
+    private String getRegionDisplayName(TimeZone tz){
+        String timezonename = tz.getID();
+        String displayname = timezonename;
+        int sep = timezonename.indexOf('/');
+
+        if(-1 != sep)
+        {
+            displayname = timezonename.substring(sep + 1);
+            displayname = displayname.replace("_", " ");
+        }
+        return displayname;
+    }
+
+    private String getFullDisplayName(TimeZone tz){
+        String timezonename = tz.getID();
+        String displayname = timezonename;
+        int sep = timezonename.indexOf('/');
+
+        if(-1 != sep)
+        {
+            displayname = timezonename.substring(0,sep) + ", " + timezonename.substring(sep + 1);
+            displayname = displayname.replace("_", " ");
+        }
+
+        return displayname;
+    }
+
+    private String getZoneOffsetDisplay(TimeZone tz){
+        long rawOffsetHrs = tz.getRawOffset()/(1000*60*60);
+        String display = "";
+        if(rawOffsetHrs>0)
+            display="+ " + rawOffsetHrs;
+        else if (rawOffsetHrs<0)
+            display="- " + -1*rawOffsetHrs;
+        int x = tz.SHORT;
+        if (x==0)
+            return  "UTC " + display;
+        else
+            return x + " | UTC " + display;
     }
 }
