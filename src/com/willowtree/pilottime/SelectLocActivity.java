@@ -35,6 +35,8 @@ public class SelectLocActivity extends Activity {
     private PilotTimeApplication application;
     private int scrollIndex;
     private int topOffset;
+    private int utcScrollIndex;
+    private int localScrollIndex;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,10 +77,12 @@ public class SelectLocActivity extends Activity {
         @Override
         public void onClick(View view) {
             TimeZone tz = TimeZone.getTimeZone("UTC");
-            TimeZoneObject tzo = new TimeZoneObject("UTC", getRegionDisplayName(tz),
-                    getFullDisplayName(tz), getZoneOffsetDisplay(tz));
-            application.setTimeZone(tzo, mType);
-            mListView.setSelection(m_zones.indexOf(tzo));
+            //TimeZoneObject tzo = new TimeZoneObject("UTC", getRegionDisplayName(tz),
+            //        getFullDisplayName(tz), getZoneOffsetDisplay(tz));
+
+            application.setTimeZone(m_zones.get(utcScrollIndex), mType);
+            //application.setTimeZone(tzo, mType);
+            //mListView.setSelection(m_zones.indexOf(tzo));
             finish();
             overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
@@ -88,8 +92,10 @@ public class SelectLocActivity extends Activity {
         @Override
         public void onClick(View view) {
             TimeZone tz = TimeZone.getDefault();
-            application.setTimeZone(new TimeZoneObject(tz.getID(), getRegionDisplayName(tz),
-                    getFullDisplayName(tz), getZoneOffsetDisplay(tz)), mType);
+            //application.setTimeZone(new TimeZoneObject(tz.getID(), getRegionDisplayName(tz),
+            //        getFullDisplayName(tz), getZoneOffsetDisplay(tz)), mType);
+
+            application.setTimeZone(m_zones.get(localScrollIndex), mType);
             finish();
             overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
@@ -109,7 +115,7 @@ public class SelectLocActivity extends Activity {
         public void onClick(View v) {
             Intent mainIntent = new Intent(v.getContext(),
                     PilotTimeActivity.class);
-            startActivity(mainIntent);
+            //startActivity(mainIntent);
             finish();
             overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
@@ -125,6 +131,12 @@ public class SelectLocActivity extends Activity {
             if(application.getTimeZone(mType).zoneID == listItems[i]){
                 scrollIndex = i;
             }
+            if(TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone(listItems[i]).getRawOffset())
+                localScrollIndex = i;
+            if(TimeZone.getTimeZone(listItems[i]).getRawOffset() == 0)
+                utcScrollIndex = i;
+            if (TimeZone.getTimeZone(application.getTimeZone(mType).zoneID).equals(TimeZone.getDefault()))
+                scrollIndex = localScrollIndex;
         }
     }
 
@@ -151,8 +163,8 @@ public class SelectLocActivity extends Activity {
 
                 zoneName.setText(z.fullDisplayName);
                 zoneTla.setText(z.zoneOffsetDisplay);
-                
-                if(z.zoneID == application.getTimeZone(mType).zoneID){
+                zoneName.setTextColor(Color.GREEN);
+                if(z.getDateOffset() == application.getTimeZone(mType).getDateOffset()){
                     zoneName.setTextColor(Color.RED);
                 }
             }
