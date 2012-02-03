@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,7 +33,7 @@ public class PilotTimeActivity extends Activity {
     private LinearLayout baseTimeBut;
     private LinearLayout resultTimeBut;
     private LinearLayout timeScreenLayout;
-    private LinearLayout converterScreenLayout;
+    private RelativeLayout converterScreenLayout;
     private LinearLayout baseTimeButDateSlider;
     private TimeZoneObject currentZone;		    //zone that is displayed on main screen
     private TimeZoneObject currentZoneBase;		//base zone that is displayed on converter screen
@@ -85,7 +86,7 @@ public class PilotTimeActivity extends Activity {
         timeFooterBut.setOnClickListener(timeFooterButtonListener);
 
         timeScreenLayout = (LinearLayout) findViewById(R.id.bodyTime);
-        converterScreenLayout = (LinearLayout) findViewById(R.id.bodyConverter);
+        converterScreenLayout = (RelativeLayout) findViewById(R.id.bodyConverter);
 
         switchBut = (ImageView) findViewById(R.id.button_switch);
         switchBut.setOnClickListener(switchButListener);

@@ -70,7 +70,8 @@
             android:background="@drawable/bkgd_time"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center">
             <LinearLayout
                 android:id="@+id/date_and_time_box1"
                 android:layout_width="wrap_content"
@@ -107,7 +108,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="2dp">
                     <TextView
@@ -258,7 +259,7 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/bodyConverter"
         android:background="@drawable/bkgd_convert"
         android:layout_width="wrap_content"
@@ -271,17 +272,26 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/selections">
-            <LinearLayout
+            android:id="@+id/selections"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp">
+            <ImageView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:src="@drawable/button_switch"
+                android:id="@+id/button_switch"
+                android:layout_centerInParent="true"/>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
                 android:id="@+id/button_convert_left"
                 android:background="@drawable/button_convert_left"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true">
+                android:layout_toLeftOf="@id/button_switch">
                 <TextView
                     android:id="@+id/button_convert_left_top_text"
                     android:layout_height="wrap_content"
@@ -293,23 +303,17 @@
                     android:layout_width="wrap_content"
                     android:text="TestText"/>
             </LinearLayout>
-            <ImageView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:src="@drawable/button_switch"
-                android:id="@+id/button_switch"
-                android:layout_margin="10dp"
-                android:layout_centerHorizontal="true"/>
+
             <LinearLayout
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:id="@+id/button_convert_right"
                 android:background="@drawable/button_convert_right"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="10dp"
-                android:layout_centerVertical="true">
+                android:layout_toRightOf="@id/button_switch">
                 <TextView
                     android:id="@+id/button_convert_right_top_text"
                     android:layout_height="wrap_content"
@@ -325,8 +329,17 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/selections">
+            android:layout_below="@id/selections"
+            android:paddingTop="5dp"
+            >
+            <ImageView
+                android:layout_height="5dp"
+                android:layout_width="wrap_content"
+                android:src="@drawable/bkgd_convert_divide"
+                android:id="@+id/divider"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                android:padding="10dp"/>
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -334,17 +347,22 @@
                 android:background="@drawable/button_basetime_convert"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_alignParentLeft="true">
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/divider"
+                android:paddingRight="10dp">
                 <TextView
                     android:id="@+id/button_basetime_top_text"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="TestText"/>
+                    android:text="TestText"
+                    android:textColor="#33ff00"/>
                 <TextView
                     android:id="@+id/button_basetime_bottom_text"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="TestText"/>
+                    android:text="TestText"
+                    android:textColor="#33ff00"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_height="wrap_content"
@@ -353,20 +371,25 @@
                 android:background="@drawable/converted_screen"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_alignParentRight="true">
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/divider"
+                android:paddingLeft="10dp">
                 <TextView
                     android:id="@+id/right_timebox_top_text"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="TestText"/>
+                    android:text="TestText"
+                    android:textColor="#FF9900"/>
                 <TextView
                     android:id="@+id/right_timebox_bottom_text"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="TestText"/>
+                    android:text="TestText"
+                    android:textColor="#FF9900"/>
             </LinearLayout>
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/footer"
