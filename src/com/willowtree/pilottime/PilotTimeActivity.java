@@ -90,6 +90,11 @@ public class PilotTimeActivity extends Activity {
         switchBut = (ImageView) findViewById(R.id.button_switch);
         switchBut.setOnClickListener(switchButListener);
 
+        //set defaults
+        //TimeZone defaultZone = TimeZone.getDefault();
+        //application.setTimeZone(new TimeZoneObject(defaultZone.getID()),PilotTimeRefs.BASE_TYPE);
+        //application.setTimeZone(new TimeZoneObject(defaultZone.getID()),PilotTimeRefs.RESULT_TYPE);
+        //application.setTimeZone(new TimeZoneObject(defaultZone.getID()),PilotTimeRefs.MAIN_TYPE);
     }
 
     private OnClickListener switchButListener = new OnClickListener() {

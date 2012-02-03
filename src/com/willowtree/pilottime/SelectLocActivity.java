@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,11 +33,16 @@ public class SelectLocActivity extends Activity {
     private Runnable viewZones;
     private ListView mListView;
     private PilotTimeApplication application;
+    private int scrollIndex;
+    private int topOffset;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selectloc);
+        
+        scrollIndex = 0;
+        topOffset = 0;
 
         utcButton = (RelativeLayout) findViewById(R.id.jumpto_utc_button);
         localButton = (RelativeLayout) findViewById(R.id.jumpto_local_button);
@@ -69,8 +75,10 @@ public class SelectLocActivity extends Activity {
         @Override
         public void onClick(View view) {
             TimeZone tz = TimeZone.getTimeZone("UTC");
-            application.setTimeZone(new TimeZoneObject("UTC", getRegionDisplayName(tz),
-                    getFullDisplayName(tz), getZoneOffsetDisplay(tz)), mType);
+            TimeZoneObject tzo = new TimeZoneObject("UTC", getRegionDisplayName(tz),
+                    getFullDisplayName(tz), getZoneOffsetDisplay(tz));
+            application.setTimeZone(tzo, mType);
+            mListView.setSelection(m_zones.indexOf(tzo));
             finish();
             overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
         }
@@ -80,7 +88,7 @@ public class SelectLocActivity extends Activity {
         @Override
         public void onClick(View view) {
             TimeZone tz = TimeZone.getDefault();
-            application.setTimeZone(new TimeZoneObject(TimeZone.getDefault().getID(), getRegionDisplayName(tz),
+            application.setTimeZone(new TimeZoneObject(tz.getID(), getRegionDisplayName(tz),
                     getFullDisplayName(tz), getZoneOffsetDisplay(tz)), mType);
             finish();
             overridePendingTransition(R.anim.itemmovedown, R.anim.itemmovedown2);
@@ -108,13 +116,16 @@ public class SelectLocActivity extends Activity {
     };
 
     private void getZones() {
-            String[] listItems = TimeZone.getAvailableIDs();
-            TimeZone tz = null;
-            for (int i = 0; i < listItems.length; i++) {
-                tz = TimeZone.getTimeZone(listItems[i]);
-                m_zones.add(new TimeZoneObject(listItems[i], getRegionDisplayName(tz),
-                        getFullDisplayName(tz), getZoneOffsetDisplay(tz)));
+        String[] listItems = TimeZone.getAvailableIDs();
+        TimeZone tz = null;
+        for (int i = 0; i < listItems.length; i++) {
+            tz = TimeZone.getTimeZone(listItems[i]);
+            m_zones.add(new TimeZoneObject(listItems[i], getRegionDisplayName(tz),
+                    getFullDisplayName(tz), getZoneOffsetDisplay(tz)));
+            if(application.getTimeZone(mType).zoneID == listItems[i]){
+                scrollIndex = i;
             }
+        }
     }
 
     private class ZoneAdapter extends ArrayAdapter<TimeZoneObject> {
@@ -140,7 +151,12 @@ public class SelectLocActivity extends Activity {
 
                 zoneName.setText(z.fullDisplayName);
                 zoneTla.setText(z.zoneOffsetDisplay);
+                
+                if(z.zoneID == application.getTimeZone(mType).zoneID){
+                    zoneName.setTextColor(Color.RED);
+                }
             }
+            mListView.setSelectionFromTop(scrollIndex, topOffset);
             return v;
         }
     }
