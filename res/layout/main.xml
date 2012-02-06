@@ -414,6 +414,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
+            android:id="@+id/turning_dial"
+            android:src="@drawable/turning_dial"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
             android:id="@+id/time_footer_light"
             android:src="@drawable/footer_light_focus"
             android:layout_width="wrap_content"

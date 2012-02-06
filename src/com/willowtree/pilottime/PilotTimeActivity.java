@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,6 +45,8 @@ public class PilotTimeActivity extends Activity {
     private boolean onTime;
     private long currentBaseTime;
     private Date currentResultTime;
+    private ImageView turningDial;
+    private Animation turnLeftFromMid, turnLeft, turnRight;
 
     /** Called when the activity is first created. */
     @Override
@@ -90,6 +94,14 @@ public class PilotTimeActivity extends Activity {
 
         switchBut = (ImageView) findViewById(R.id.button_switch);
         switchBut.setOnClickListener(switchButListener);
+        
+        turningDial = (ImageView) findViewById(R.id.turning_dial);
+        turnLeftFromMid = AnimationUtils.loadAnimation(PilotTimeActivity.this, R.anim.turn_left_from_mid);
+        turnRight = AnimationUtils.loadAnimation(PilotTimeActivity.this, R.anim.turn_right);
+        turnLeft = AnimationUtils.loadAnimation(PilotTimeActivity.this, R.anim.turn_left);
+
+        //rotate left from middle to "Time" selection
+        turningDial.startAnimation(turnLeftFromMid);
 
         //set defaults
         TimeZone defaultZone = TimeZone.getDefault();
@@ -138,8 +150,11 @@ public class PilotTimeActivity extends Activity {
                 //switch which light is 'on'
                 converterFooterBut.setImageDrawable(getResources().getDrawable(R.drawable.footer_light_focus));
                 timeFooterBut.setImageDrawable(getResources().getDrawable(R.drawable.footer_light));
+                //turn dial to the right
+                turningDial.startAnimation(turnRight);
             }
             onTime = false; //we are not on the 'time' screen anymore
+
         }
     };
 
@@ -153,6 +168,8 @@ public class PilotTimeActivity extends Activity {
                 //switch which light is 'on'
                 converterFooterBut.setImageDrawable(getResources().getDrawable(R.drawable.footer_light));
                 timeFooterBut.setImageDrawable(getResources().getDrawable(R.drawable.footer_light_focus));
+                //turn dial to the left
+                turningDial.startAnimation(turnLeft);
             }
             onTime = true;    //we are back on the 'time' screen
         }
