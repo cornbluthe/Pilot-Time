@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:clickable="true"
             android:rotation="90"
-            android:src="@drawable/arrow_down" />
+            android:src="@drawable/arrow_down_sel" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,12 +29,13 @@
                 android:id="@+id/jumpto_utc_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_jumpto_utc"
+                android:background="@drawable/button_jumpto_utc_sel"
                 >
                 <TextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="UTC"
+                      android:textStyle="bold"
                       android:layout_centerInParent="true"
                     />
             </RelativeLayout>
@@ -43,11 +44,12 @@
                 android:id="@+id/jumpto_local_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_jumpto_local" >
+                android:background="@drawable/button_jumpto_local_sel" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Local"
+                android:textStyle="bold"
                 android:layout_centerInParent="true"
                 />
             </RelativeLayout>

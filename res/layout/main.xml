@@ -278,7 +278,7 @@
             <ImageView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:src="@drawable/button_switch"
+                android:src="@drawable/button_switch_sel"
                 android:id="@+id/button_switch"
                 android:layout_centerInParent="true"/>
 
@@ -286,7 +286,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:id="@+id/button_convert_left"
-                android:background="@drawable/button_convert_left"
+                android:background="@drawable/button_convert_left_sel"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_centerVertical="true"
@@ -304,11 +304,12 @@
                     android:text="TestText"/>
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:id="@+id/button_convert_right"
-                android:background="@drawable/button_convert_right"
+                android:background="@drawable/button_convert_right_sel"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_centerVertical="true"
@@ -325,6 +326,7 @@
                     android:layout_width="wrap_content"
                     android:text="TestText"/>
             </LinearLayout>
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -344,7 +346,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/button_basetime_convert"
-                android:background="@drawable/button_basetime_convert"
+                android:background="@drawable/button_basetime_convert_sel"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_centerVertical="true"

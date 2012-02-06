@@ -172,6 +172,7 @@ public class SelectLocActivity extends Activity {
             return v;
         }
     }
+
     private String getRegionDisplayName(TimeZone tz){
         String timezonename = tz.getID();
         String displayname = timezonename;
